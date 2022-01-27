@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Page Title</title>
+        <link rel="stylesheet" href="style.css">
+    </head>
+    
+    <body>
+    <div id="tasksBlock"></div>
+    
+    
+    <script>
+    
+    //переменные
+    let formKeeper = document.getElementById("tasksBlock");
+    let checkString
+    
+    let createAddString = function() {
+        let inputBlock = document.createElement("div")
+        inputBlock.classList.add("block")
+        formKeeper.append(inputBlock)
+        let inputNewTask = document.createElement("input")
+        inputNewTask.classList.add("input")
+        inputBlock.append(inputNewTask)
+        let addButton = document.createElement("div")
+        addButton.classList.add("button")
+        addButton.addEventListener("click", addTask)
+        inputBlock.append(addButton)
+        addButton.innerText = "add";
+        
+    }
+
+    let correctionAgree = function(place, valueTask, buttonName) {
+        let taskBlock = document.createElement("div")
+        taskBlock.classList.add("block")
+        
+        place.insertAdjacentElement("beforeBegin", taskBlock)
+        let task = document.createElement("div")
+        task.classList.add("input")
+        task.innerText = valueTask;
+        taskBlock.append(task)
+        let correctButton = document.createElement("div")
+        correctButton.classList.add("button")
+        correctButton.addEventListener("click", correctTask)
+        correctButton.innerText = buttonName;
+        taskBlock.append(correctButton)
+        //console.log("something is working... ")
+    }
+    
+    
+    let addTask = function(clickElement) {
+        checkString = clickElement.target.previousElementSibling
+        if (checkString.value) {
+        //checkString.style.backgroundColor = "green"
+        correctionAgree(clickElement.target.parentElement, checkString.value, "correct", );
+        checkString.value = ""
+                }
+
+    }
+    
+    let correctTask = function(clickElement) {
+        checkString = clickElement.target.previousElementSibling
+        
+        console.log("Call from function")
+    }
+    //let acceptTask = function()
+    
+    createAddString()
+    
+    </script>
+    </body>
+</html>
