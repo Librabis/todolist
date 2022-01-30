@@ -42,7 +42,7 @@
                 // если место это инпутовский тэг
                 place.insertAdjacentElement("beforeBegin", taskBlock)
                 let task = document.createElement("div")
-                task.classList.add("input")
+                task.classList.add("task")
                 task.innerText = valueTask;
                 taskBlock.append(task)
                 let correctButton = document.createElement("div")
@@ -93,7 +93,7 @@
         let getList = function (){
         for (let i = 0; i < formKeeper.childNodes.length - 1; i++) {
                 
-               allTasks[i]= formKeeper.childNodes[i].querySelector(".input").innerHTML 
+               allTasks[i]= formKeeper.childNodes[i].querySelector(".task").innerHTML 
             }
             alert(allTasks)
 
