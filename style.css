@@ -2,7 +2,7 @@ body {
     background-color:gray; 
     display: flex;
     flex-direction: column;
-    width: 550px;
+    width: 600px;
     align-items: center; 
         
 }
@@ -35,9 +35,8 @@ body {
 
 .block{
     display: flex;
-    width: 450px;
+    width: 560px;
     height: 60px;
-    justify-content: center;
     align-items: center;
     font-family: monospace;
 }
@@ -54,4 +53,18 @@ body {
     box-sizing: border-box;
     font-weight: 900;
 
+}
+
+.deleteButton {
+    width: 54px;
+    height: 54px;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: monospace;
+    font-weight: 900;
+    font-size: 20px;
+    text-transform: uppercase;
+    background-color: yellow;
 }

@@ -50,7 +50,6 @@
                 correctButton.addEventListener("click", correctTask)
                 correctButton.innerText = buttonName;
                 taskBlock.append(correctButton)
-                    //console.log("something is working... ")
                 if (formKeeper.lastChild != place) {
                     place.remove()
                 } // если это не последний элемент в форме, то         place.remove()
@@ -68,11 +67,17 @@
                 taskBlock.append(correctButton)
                 place.remove()
             }
+            let deleteButton = document.createElement("div")
+            deleteButton.classList.add("deleteButton")
+            deleteButton.addEventListener("click", deleteTask)
+            deleteButton.innerText = "X";
+            
+            taskBlock.append(deleteButton)
+            
         }
         let addTask = function (clickElement) {
             checkString = clickElement.target.previousElementSibling
             if (checkString.value) {
-                //checkString.style.backgroundColor = "green"
                 correction (clickElement.target.parentElement, checkString.value, "correct", checkString);
                 checkString.value = "";
 
@@ -82,12 +87,10 @@
         let correctTask = function (clickElement) {
                 checkString = clickElement.target.previousElementSibling
                 correction (clickElement.target.parentElement, checkString.textContent, "agree", checkString)
-                //console.log("Call from function")
             }
         let acceptTask = function(clickElement) {
             checkString = clickElement.target.previousElementSibling
                 correction (clickElement.target.parentElement, checkString.value, "correct", checkString)
-                //console.log("Call from function")
         }
         
         let getList = function (){
@@ -99,6 +102,10 @@
 
         }
         
+        let deleteTask = function (clickElement){
+            clickElement.target.parentElement.remove()
+            
+        }
         createAddString()                                 
     </script>
 </body>
