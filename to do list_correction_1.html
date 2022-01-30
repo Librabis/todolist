@@ -11,6 +11,9 @@
         //переменные
         let formKeeper = document.getElementById("tasksBlock");
         let checkString
+        let allTasks = []
+        
+        
         let createAddString = function () {
             let inputBlock = document.createElement("div")
             inputBlock.classList.add("block")
@@ -23,6 +26,13 @@
             addButton.addEventListener("click", addTask)
             inputBlock.append(addButton)
             addButton.innerText = "add";
+            console.log(formKeeper.firstChild)
+            let taskList = document.createElement("div")
+                taskList.classList.add("button")
+            taskList.innerText = "Get list"
+            taskList.addEventListener("click", getList)
+               formKeeper.insertAdjacentElement("afterEnd", taskList)
+            
         }
         let correction = function (place, valueTask, buttonName, nearElement) {
             let taskBlock = document.createElement("div")
@@ -65,7 +75,9 @@
                 //checkString.style.backgroundColor = "green"
                 correction (clickElement.target.parentElement, checkString.value, "correct", checkString);
                 checkString.value = "";
+
             }
+
         }
         let correctTask = function (clickElement) {
                 checkString = clickElement.target.previousElementSibling
@@ -77,7 +89,17 @@
                 correction (clickElement.target.parentElement, checkString.value, "correct", checkString)
                 //console.log("Call from function")
         }
-        createAddString()
+        
+        let getList = function (){
+        for (let i = 0; i < formKeeper.childNodes.length - 1; i++) {
+                
+               allTasks[i]= formKeeper.childNodes[i].querySelector(".input").innerHTML 
+            }
+            alert(allTasks)
+
+        }
+        
+        createAddString()                                 
     </script>
 </body>
 
