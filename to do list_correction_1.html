@@ -147,10 +147,10 @@
 //addTask добавление нового элемента
         
         let addTask = function(clickButton) {
-            let taskText = clickButton.target.previousElementSibling.value
-            if (taskText) {
-                inputStringConstructor ("block", "div", "inputTask", "correct", doingF, taskText);
-                //clickButton.target.previousElementSibling.value = "";
+            let taskText = clickButton.target.previousElementSibling
+            if (taskText.value) {
+                inputStringConstructor ("block", "div", "inputTask", "correct", doingF, taskText.value);
+                taskText.value = "";
 
             }
         }
