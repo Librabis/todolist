@@ -109,11 +109,14 @@
         createAddString() */ 
         let formKeeper = document.getElementById("tasksBlock")
 //inputStringConstructor конструктор строит блок, инпут и кнопку по полученным значениям класса блока, название тэга, css класс задачи, имени кнопки и действия кнопки
-        let inputStringConstructor = function (classBlock, tagCreate, classTask, buttonName, buttonDo) {
+        let inputStringConstructor = function (classBlock, tagCreate, classTask, buttonName, buttonDo, taskText) {
             let stringBlock = document.createElement("div")
             stringBlock.classList.add(classBlock)
             let inputBlock = document.createElement(tagCreate)
             inputBlock.classList.add(classTask)
+            if (taskText) {
+                inputBlock.innerText = taskText
+            }            
             stringBlock.append(inputBlock)
             let changeButton = document.createElement("div")
             changeButton.classList.add("button")
@@ -121,33 +124,46 @@
             changeButton.innerText = buttonName
             stringBlock.append(changeButton)
             
-            placeInDocument(classBlock, stringBlock)
+            placeInDocument(classTask, stringBlock)
             
         }
         
 //placeInDocument помещение в верстку по переданному значению класса css и созданному блоку
-        let placeInDocument = function(classBlock, stringBlock) {
-            if (classBlock === "add") {
+
+        
+        let placeInDocument = function(classTask, stringBlock) {
+            if (classTask === "add") {
                 formKeeper.append(stringBlock)
             }
-            else if (classBlock === "title") {
+            else if (classTask === "title") {
                 formKeeper.insertAdjacentElement("beforeBegin", stringBlock)
             }
-            else if (classBlock === "inputTask") {
+            else if (classTask === "inputTask") {
                 formKeeper.append(stringBlock)
             }
         }
         
         
 //addTask добавление нового элемента
+        
+        let addTask = function(clickButton) {
+            let taskText = clickButton.target.previousElementSibling.value
+            if (taskText) {
+                inputStringConstructor ("block", "div", "inputTask", "correct", doingF, taskText);
+                //clickButton.target.previousElementSibling.value = "";
+
+            }
+        }
+        
 //correct корректировка (вытаскивает значение из инпута, заменяет блоком, меняет надпись на кнопке, удаляет изначальный блок или обратно)
         
                 function doingF () {
                     alert ("done")
                 }
 
+
         
-        inputStringConstructor("add", "input", "inputTask", "add", doingF)
+        inputStringConstructor("block", "input", "inputTask", "add", addTask)
         
         
 //deleteTask удаление (создание кнопки, помещение в верстку, присвоение функции удаления при нажатии)
