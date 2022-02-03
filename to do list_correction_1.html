@@ -8,7 +8,7 @@
 <body>
     <div id="tasksBlock"></div>
     <script>
-        //переменные
+        /*//переменные
         let formKeeper = document.getElementById("tasksBlock");
         let checkString
         let allTasks = []
@@ -106,7 +106,53 @@
             clickElement.target.parentElement.remove()
             
         }
-        createAddString()                                 
+        createAddString() */ 
+        let formKeeper = document.getElementById("tasksBlock")
+//inputStringConstructor конструктор строит блок, инпут и кнопку по полученным значениям класса блока, название тэга, css класс задачи, имени кнопки и действия кнопки
+        let inputStringConstructor = function (classBlock, tagCreate, classTask, buttonName, buttonDo) {
+            let stringBlock = document.createElement("div")
+            stringBlock.classList.add(classBlock)
+            let inputBlock = document.createElement(tagCreate)
+            inputBlock.classList.add(classTask)
+            stringBlock.append(inputBlock)
+            let changeButton = document.createElement("div")
+            changeButton.classList.add("button")
+            changeButton.addEventListener("click", buttonDo)
+            changeButton.innerText = buttonName
+            stringBlock.append(changeButton)
+            
+            placeInDocument(classBlock, stringBlock)
+            
+        }
+        
+//placeInDocument помещение в верстку по переданному значению класса css и созданному блоку
+        let placeInDocument = function(classBlock, stringBlock) {
+            if (classBlock === "add") {
+                formKeeper.append(stringBlock)
+            }
+            else if (classBlock === "title") {
+                formKeeper.insertAdjacentElement("beforeBegin", stringBlock)
+            }
+            else if (classBlock === "inputTask") {
+                formKeeper.append(stringBlock)
+            }
+        }
+        
+        
+//addTask добавление нового элемента
+//correct корректировка (вытаскивает значение из инпута, заменяет блоком, меняет надпись на кнопке, удаляет изначальный блок или обратно)
+        
+                function doingF () {
+                    alert ("done")
+                }
+
+        
+        inputStringConstructor("add", "input", "inputTask", "add", doingF)
+        
+        
+//deleteTask удаление (создание кнопки, помещение в верстку, присвоение функции удаления при нажатии)
+//getList получает значение всех задач и вывоит в алерт
+
     </script>
 </body>
 

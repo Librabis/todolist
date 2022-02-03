@@ -7,7 +7,7 @@ body {
         
 }
 
-.button {
+/*.button {
     width: 100px;
     height: 54px;
     background-color: coral; 
@@ -41,7 +41,7 @@ body {
     font-family: monospace;
 }
 
-.task{
+.inputTask{
     display: flex;
     width: 310px;
     height: 60px;
@@ -67,4 +67,25 @@ body {
     font-size: 20px;
     text-transform: uppercase;
     background-color: yellow;
+} */
+
+.inputTask {
+    width: 310px;
+    height: 60px;
+}
+
+.title {
+    
+}
+
+.add {
+    
+}
+
+.block{
+    display: flex;
+    width: 560px;
+    height: 60px;
+    align-items: center;
+    font-family: monospace;
 }
