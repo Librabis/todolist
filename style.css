@@ -1,11 +1,11 @@
 body {
-    background-color:gray; 
+    background-color: gray;
     display: flex;
     flex-direction: column;
     width: 600px;
-    align-items: center; 
-        
+    align-items: center;
 }
+
 
 /*.button {
     width: 100px;
@@ -72,14 +72,25 @@ body {
 .inputTask {
     width: 310px;
     height: 60px;
+        border-radius: 50%;
+    padding-left: 10px;
+    box-sizing: border-box
+
 }
 
 .title {
-    
-}
+    width: 650px;
+    height: 60px;
+        border-radius: 50%;
+    box-sizing: border-box
 
+}
 .add {
-    
+    width: 310px;
+    height: 60px;
+        border-radius: 50%;
+    box-sizing: border-box
+
 }
 
 .block {
@@ -88,4 +99,20 @@ body {
     height: 60px;
     align-items: center;
     font-family: monospace;
+}
+
+.button {
+    width: 100px;
+    height: 60px;
+    background-color: dodgerblue; 
+    background: linear-gradient(45deg, #EECFBA, #C5DDE8);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-transform: uppercase;
+    color: white;
+    font-size: 18px;
+    font-family: monospace;
+    font-weight: 900;
 }

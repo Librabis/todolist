@@ -8,167 +8,95 @@
 <body>
     <div id="tasksBlock"></div>
     <script>
-        /*//переменные
-        let formKeeper = document.getElementById("tasksBlock");
-        let checkString
-        let allTasks = []
-        
-        
-        let createAddString = function () {
-            let inputBlock = document.createElement("div")
-            inputBlock.classList.add("block")
-            formKeeper.append(inputBlock)
-            let inputNewTask = document.createElement("input")
-            inputNewTask.classList.add("input")
-            inputBlock.append(inputNewTask)
-            let addButton = document.createElement("div")
-            addButton.classList.add("button")
-            addButton.addEventListener("click", addTask)
-            inputBlock.append(addButton)
-            addButton.innerText = "add";
-            console.log(formKeeper.firstChild)
-            let taskList = document.createElement("div")
-                taskList.classList.add("button")
-            taskList.innerText = "Get list"
-            taskList.addEventListener("click", getList)
-               formKeeper.insertAdjacentElement("afterEnd", taskList)
-            
-        }
-        let correction = function (place, valueTask, buttonName, nearElement) {
-            let taskBlock = document.createElement("div")
-            taskBlock.classList.add("block")
-            
-            if (nearElement.tagName == "INPUT") {
-                // если место это инпутовский тэг
-                place.insertAdjacentElement("beforeBegin", taskBlock)
-                let task = document.createElement("div")
-                task.classList.add("task")
-                task.innerText = valueTask;
-                taskBlock.append(task)
-                let correctButton = document.createElement("div")
-                correctButton.classList.add("button")
-                correctButton.addEventListener("click", correctTask)
-                correctButton.innerText = buttonName;
-                taskBlock.append(correctButton)
-                if (formKeeper.lastChild != place) {
-                    place.remove()
-                } // если это не последний элемент в форме, то         place.remove()
+        let formKeeper = document.getElementById("tasksBlock")
+            //inputStringConstructor конструктор строит блок, инпут и кнопку по полученным значениям класса блока, название тэга, css класс задачи, имени кнопки и действия кнопки
+        let inputStringConstructor = function (classBlock, tagCreate, classTask, buttonName, buttonDo, taskText) {
+                let stringBlock = document.createElement("div")
+                stringBlock.classList.add(classBlock)
+                let inputBlock = document.createElement(tagCreate)
+                inputBlock.classList.add(classTask)
+                stringBlock.append(inputBlock)
+                let changeButton = document.createElement("div")
+                changeButton.classList.add("button")
+                changeButton.addEventListener("click", buttonDo)
+                changeButton.innerText = buttonName
+                stringBlock.append(changeButton)
+                placeInDocument(classTask, stringBlock)
+                if (taskText) {
+                    switch (tagCreate) {
+                    case "div":
+                        inputBlock.innerText = taskText
+                        break;
+                    case "input":
+                        inputBlock.value = taskText
+                        break;
+                    }
+                    let deleteButton = document.createElement("div")
+                    deleteButton.classList.add("button")
+                    deleteButton.addEventListener("click", deleteTask)
+                    deleteButton.innerText = "X";
+                    stringBlock.append(deleteButton)
+                }
             }
-            else {
-                place.insertAdjacentElement("beforeBegin", taskBlock) // correct
-                let task = document.createElement("input")
-                task.classList.add("input")
-                task.value = valueTask;
-                taskBlock.append(task)
-                let correctButton = document.createElement("div")
-                correctButton.classList.add("button")
-                correctButton.addEventListener("click", acceptTask)
-                correctButton.innerText = buttonName;
-                taskBlock.append(correctButton)
-                place.remove()
+            //placeInDocument помещение в верстку по переданному значению класса css и созданному блоку
+        let placeInDocument = function (classTask, stringBlock) {
+                if (classTask === "add") {
+                    formKeeper.insertAdjacentElement("afterEnd", stringBlock)
+                }
+                else if (classTask === "title") {
+                    formKeeper.insertAdjacentElement("beforeBegin", stringBlock)
+                }
+                else if (classTask === "inputTask") {
+                    formKeeper.append(stringBlock)
+                }
             }
-            let deleteButton = document.createElement("div")
-            deleteButton.classList.add("deleteButton")
-            deleteButton.addEventListener("click", deleteTask)
-            deleteButton.innerText = "X";
-            
-            taskBlock.append(deleteButton)
-            
+            //listName добавляет название для списка 
+            //addTask добавление нового элемента
+        let addTask = function (clickButton) {
+                let taskText = clickButton.target.previousElementSibling
+                if (taskText.value) {
+                    inputStringConstructor("block", "div", "inputTask", "correct", correct, taskText.value);
+                    taskText.value = "";
+                    if (!document.getElementById("allTasksList")) {
+                        let taskList = document.createElement("div")
+                        taskList.classList.add("button")
+                        taskList.innerText = "Get list"
+                        taskList.addEventListener("click", getList)
+                        taskList.id = "allTasksList"
+                        formKeeper.insertAdjacentElement("beforeBegin", taskList)
+                    }
+                }
+            }
+            //correct и agree корректировка и согласие (вытаскивает значение из инпута, заменяет блоком, меняет надпись на кнопке, удаляет изначальный блок или обратно)
+        let correct = function (clickButton) {
+            let taskText = clickButton.target.previousElementSibling.textContent
+            inputStringConstructor("block", "input", "inputTask", "agree", agree, taskText);
+            clickButton.target.previousElementSibling.parentElement.remove()
         }
-        let addTask = function (clickElement) {
-            checkString = clickElement.target.previousElementSibling
-            if (checkString.value) {
-                correction (clickElement.target.parentElement, checkString.value, "correct", checkString);
-                checkString.value = "";
+        let agree = function (clickButton) {
+            let taskText = clickButton.target.previousElementSibling
+            inputStringConstructor("block", "div", "inputTask", "correct", correct, taskText.value);
+            clickButton.target.previousElementSibling.parentElement.remove()
+        }
 
-            }
-
+        function doingF() {
+            alert("done")
         }
-        let correctTask = function (clickElement) {
-                checkString = clickElement.target.previousElementSibling
-                correction (clickElement.target.parentElement, checkString.textContent, "agree", checkString)
+        //deleteTask удаление (создание кнопки, помещение в верстку, присвоение функции удаления при нажатии)
+        let deleteTask = function (clickElement) {
+                clickElement.target.parentElement.remove()
             }
-        let acceptTask = function(clickElement) {
-            checkString = clickElement.target.previousElementSibling
-                correction (clickElement.target.parentElement, checkString.value, "correct", checkString)
-        }
-        
-        let getList = function (){
-        for (let i = 0; i < formKeeper.childNodes.length - 1; i++) {
-                
-               allTasks[i]= formKeeper.childNodes[i].querySelector(".task").innerHTML 
+            //getList получает значение всех задач и вывоит в алерт
+        let getList = function () {
+            let allTasks = [];
+            for (let i = 0; i < formKeeper.childNodes.length; i++) {
+                allTasks[i] = `${i+1}. ${formKeeper.childNodes[i].querySelector(".inputTask").innerHTML} `
+                    //formKeeper.childNodes[i].querySelector(".inputTask").innerHTML
+                    //
             }
             alert(allTasks)
-
         }
-        
-        let deleteTask = function (clickElement){
-            clickElement.target.parentElement.remove()
-            
-        }
-        createAddString() */ 
-        let formKeeper = document.getElementById("tasksBlock")
-//inputStringConstructor конструктор строит блок, инпут и кнопку по полученным значениям класса блока, название тэга, css класс задачи, имени кнопки и действия кнопки
-        let inputStringConstructor = function (classBlock, tagCreate, classTask, buttonName, buttonDo, taskText) {
-            let stringBlock = document.createElement("div")
-            stringBlock.classList.add(classBlock)
-            let inputBlock = document.createElement(tagCreate)
-            inputBlock.classList.add(classTask)
-            if (taskText) {
-                inputBlock.innerText = taskText
-            }            
-            stringBlock.append(inputBlock)
-            let changeButton = document.createElement("div")
-            changeButton.classList.add("button")
-            changeButton.addEventListener("click", buttonDo)
-            changeButton.innerText = buttonName
-            stringBlock.append(changeButton)
-            
-            placeInDocument(classTask, stringBlock)
-            
-        }
-        
-//placeInDocument помещение в верстку по переданному значению класса css и созданному блоку
-
-        
-        let placeInDocument = function(classTask, stringBlock) {
-            if (classTask === "add") {
-                formKeeper.append(stringBlock)
-            }
-            else if (classTask === "title") {
-                formKeeper.insertAdjacentElement("beforeBegin", stringBlock)
-            }
-            else if (classTask === "inputTask") {
-                formKeeper.append(stringBlock)
-            }
-        }
-        
-        
-//addTask добавление нового элемента
-        
-        let addTask = function(clickButton) {
-            let taskText = clickButton.target.previousElementSibling
-            if (taskText.value) {
-                inputStringConstructor ("block", "div", "inputTask", "correct", doingF, taskText.value);
-                taskText.value = "";
-
-            }
-        }
-        
-//correct корректировка (вытаскивает значение из инпута, заменяет блоком, меняет надпись на кнопке, удаляет изначальный блок или обратно)
-        
-                function doingF () {
-                    alert ("done")
-                }
-
-
-        
-        inputStringConstructor("block", "input", "inputTask", "add", addTask)
-        
-        
-//deleteTask удаление (создание кнопки, помещение в верстку, присвоение функции удаления при нажатии)
-//getList получает значение всех задач и вывоит в алерт
-
+        inputStringConstructor("block", "input", "add", "add", addTask)
     </script>
 </body>
 
