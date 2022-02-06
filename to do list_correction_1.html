@@ -10,7 +10,7 @@
     <script>
         let formKeeper = document.getElementById("tasksBlock")
             //inputStringConstructor конструктор строит блок, инпут и кнопку по полученным значениям класса блока, название тэга, css класс задачи, имени кнопки и действия кнопки
-        let inputStringConstructor = function (classBlock, tagCreate, classTask, buttonName, buttonDo, taskText) {
+        let inputStringConstructor = function (classBlock, tagCreate, classTask, buttonName, buttonDo, taskText, clickButton) {
                 let stringBlock = document.createElement("div")
                 stringBlock.classList.add(classBlock)
                 let inputBlock = document.createElement(tagCreate)
@@ -21,7 +21,7 @@
                 changeButton.addEventListener("click", buttonDo)
                 changeButton.innerText = buttonName
                 stringBlock.append(changeButton)
-                placeInDocument(classTask, stringBlock)
+                placeInDocument(classTask, stringBlock, clickButton)
                 if (taskText) {
                     switch (tagCreate) {
                     case "div":
@@ -39,23 +39,39 @@
                 }
             }
             //placeInDocument помещение в верстку по переданному значению класса css и созданному блоку
-        let placeInDocument = function (classTask, stringBlock) {
-                if (classTask === "add") {
-                    formKeeper.insertAdjacentElement("afterEnd", stringBlock)
+        let placeInDocument = function (classTask, stringBlock, clickButton) {
+                switch (classTask) {
+                case "add":
+                    formKeeper.insertAdjacentElement("afterEnd", stringBlock);
+                    break;
+                case "title":
+                    formKeeper.insertAdjacentElement("beforeBegin", stringBlock);
+                    break;
+                case "inputTask":
+                    if (clickButton.previousElementSibling.classList.contains("add")) {
+                        formKeeper.insertAdjacentElement("beforeEnd", stringBlock)
+                    }
+                    else {
+                        clickButton.parentElement.insertAdjacentElement("afterEnd", stringBlock)
+                    }
+                    break;
                 }
-                else if (classTask === "title") {
-                    formKeeper.insertAdjacentElement("beforeBegin", stringBlock)
-                }
-                else if (classTask === "inputTask") {
-                    formKeeper.append(stringBlock)
-                }
+                //                if (classTask === "add") {
+                //                    formKeeper.insertAdjacentElement("afterEnd", stringBlock)
+                //                }
+                //                else if (classTask === "title") {
+                //                    formKeeper.insertAdjacentElement("beforeBegin", stringBlock)
+                //                }
+                //                else if (classTask === "inputTask") {                   clickButton.insertAdjacentElement("afterEnd", stringBlock)
+                //                }
             }
+        
             //listName добавляет название для списка 
             //addTask добавление нового элемента
         let addTask = function (clickButton) {
                 let taskText = clickButton.target.previousElementSibling
                 if (taskText.value) {
-                    inputStringConstructor("block", "div", "inputTask", "correct", correct, taskText.value);
+                    inputStringConstructor("block", "div", "inputTask", "correct", correct, taskText.value, clickButton.target);
                     taskText.value = "";
                     if (!document.getElementById("allTasksList")) {
                         let taskList = document.createElement("div")
@@ -70,12 +86,12 @@
             //correct и agree корректировка и согласие (вытаскивает значение из инпута, заменяет блоком, меняет надпись на кнопке, удаляет изначальный блок или обратно)
         let correct = function (clickButton) {
             let taskText = clickButton.target.previousElementSibling.textContent
-            inputStringConstructor("block", "input", "inputTask", "agree", agree, taskText);
+            inputStringConstructor("block", "input", "inputTask", "agree", agree, taskText, clickButton.target);
             clickButton.target.previousElementSibling.parentElement.remove()
         }
         let agree = function (clickButton) {
             let taskText = clickButton.target.previousElementSibling
-            inputStringConstructor("block", "div", "inputTask", "correct", correct, taskText.value);
+            inputStringConstructor("block", "div", "inputTask", "correct", correct, taskText.value, clickButton.target);
             clickButton.target.previousElementSibling.parentElement.remove()
         }
 
