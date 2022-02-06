@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="style.css"> </head>
 
 <body>
-   <div id="listTitle"></div>
+    <div id="listTitle"></div>
     <div id="tasksBlock"></div>
     <script>
         let formKeeper = document.getElementById("tasksBlock")
@@ -46,9 +46,11 @@
                 switch (classTask) {
                 case "add":
                     formKeeper.insertAdjacentElement("afterEnd", stringBlock);
+                    stringBlock.firstChild.placeholder = "Add new task"
                     break;
                 case "title":
                     document.getElementById("listTitle").insertAdjacentElement("afterBegin", stringBlock);
+                    stringBlock.firstChild.placeholder = "Create list name"
                     break;
                 case "inputTask":
                     if (clickButton.previousElementSibling.classList.contains("add")) {
@@ -77,8 +79,8 @@
         }
         let correctListName = function (clickButton) {
                 let taskText = clickButton.target.previousElementSibling.textContent
-            inputStringConstructor("block", "input", "title", "accept list name", addListName, taskText, clickButton.target);
-            clickButton.target.previousElementSibling.parentElement.remove()
+                inputStringConstructor("block", "input", "title", "accept list name", addListName, taskText, clickButton.target);
+                clickButton.target.previousElementSibling.parentElement.remove()
             }
             //////////////////////////////////////////////////////////
             //addTask добавление нового элемента
