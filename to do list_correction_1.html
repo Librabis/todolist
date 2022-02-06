@@ -6,6 +6,7 @@
     <link rel="stylesheet" href="style.css"> </head>
 
 <body>
+   <div id="listTitle"></div>
     <div id="tasksBlock"></div>
     <script>
         let formKeeper = document.getElementById("tasksBlock")
@@ -31,11 +32,13 @@
                         inputBlock.value = taskText
                         break;
                     }
-                    let deleteButton = document.createElement("div")
-                    deleteButton.classList.add("button")
-                    deleteButton.addEventListener("click", deleteTask)
-                    deleteButton.innerText = "X";
-                    stringBlock.append(deleteButton)
+                    if (classTask === "inputTask") {
+                        let deleteButton = document.createElement("div")
+                        deleteButton.classList.add("button")
+                        deleteButton.addEventListener("click", deleteTask)
+                        deleteButton.innerText = "X";
+                        stringBlock.append(deleteButton)
+                    }
                 }
             }
             //placeInDocument помещение в верстку по переданному значению класса css и созданному блоку
@@ -45,7 +48,7 @@
                     formKeeper.insertAdjacentElement("afterEnd", stringBlock);
                     break;
                 case "title":
-                    formKeeper.insertAdjacentElement("beforeBegin", stringBlock);
+                    document.getElementById("listTitle").insertAdjacentElement("afterBegin", stringBlock);
                     break;
                 case "inputTask":
                     if (clickButton.previousElementSibling.classList.contains("add")) {
@@ -65,8 +68,19 @@
                 //                else if (classTask === "inputTask") {                   clickButton.insertAdjacentElement("afterEnd", stringBlock)
                 //                }
             }
-        
             //listName добавляет название для списка 
+            //////////////////////////////////////////////////////////
+        let addListName = function (clickButton) {
+            let taskText = clickButton.target.previousElementSibling
+            inputStringConstructor("block", "div", "title", "correct list name", correctListName, taskText.value, clickButton.target);
+            clickButton.target.previousElementSibling.parentElement.remove()
+        }
+        let correctListName = function (clickButton) {
+                let taskText = clickButton.target.previousElementSibling.textContent
+            inputStringConstructor("block", "input", "title", "accept list name", addListName, taskText, clickButton.target);
+            clickButton.target.previousElementSibling.parentElement.remove()
+            }
+            //////////////////////////////////////////////////////////
             //addTask добавление нового элемента
         let addTask = function (clickButton) {
                 let taskText = clickButton.target.previousElementSibling
@@ -79,7 +93,7 @@
                         taskList.innerText = "Get list"
                         taskList.addEventListener("click", getList)
                         taskList.id = "allTasksList"
-                        formKeeper.insertAdjacentElement("beforeBegin", taskList)
+                        taskText.parentElement.insertAdjacentElement("afterEnd", taskList)
                     }
                 }
             }
@@ -110,9 +124,11 @@
                     //formKeeper.childNodes[i].querySelector(".inputTask").innerHTML
                     //
             }
-            alert(allTasks)
+            alert(`For ${document.getElementById("listTitle").firstChild.firstChild.innerText} need to do:
+${allTasks}`)
         }
         inputStringConstructor("block", "input", "add", "add", addTask)
+        inputStringConstructor("block", "input", "title", "add list name", addListName)
     </script>
 </body>
 
