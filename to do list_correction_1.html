@@ -35,6 +35,7 @@
                     if (classTask === "inputTask") {
                         let deleteButton = document.createElement("div")
                         deleteButton.classList.add("button")
+                        deleteButton.classList.add("delete")
                         deleteButton.addEventListener("click", deleteTask)
                         deleteButton.innerText = "X";
                         stringBlock.append(deleteButton)
@@ -74,12 +75,12 @@
             //////////////////////////////////////////////////////////
         let addListName = function (clickButton) {
             let taskText = clickButton.target.previousElementSibling
-            inputStringConstructor("block", "div", "title", "correct list name", correctListName, taskText.value, clickButton.target);
+            inputStringConstructor("listNameBlock", "div", "title", "correct list name", correctListName, taskText.value, clickButton.target);
             clickButton.target.previousElementSibling.parentElement.remove()
         }
         let correctListName = function (clickButton) {
                 let taskText = clickButton.target.previousElementSibling.textContent
-                inputStringConstructor("block", "input", "title", "accept list name", addListName, taskText, clickButton.target);
+                inputStringConstructor("listNameBlock", "input", "title", "accept list name", addListName, taskText, clickButton.target);
                 clickButton.target.previousElementSibling.parentElement.remove()
             }
             //////////////////////////////////////////////////////////
