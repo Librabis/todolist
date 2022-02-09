@@ -32,14 +32,7 @@
                         inputBlock.value = taskText
                         break;
                     }
-                    if (classTask === "inputTask") {
-                        let deleteButton = document.createElement("div")
-                        deleteButton.classList.add("button")
-                        deleteButton.classList.add("delete")
-                        deleteButton.addEventListener("click", deleteTask)
-                        deleteButton.innerText = "X";
-                        stringBlock.append(deleteButton)
-                    }
+                    
                 }
             }
             //placeInDocument помещение в верстку по переданному значению класса css и созданному блоку
@@ -54,12 +47,31 @@
                     stringBlock.firstChild.placeholder = "Create list name"
                     break;
                 case "inputTask":
+                    //создать блок-обёртку
+                    // поместить в вёрстку блок-обёртку и в него поместить строки
+                    //внутрь блока-обёртки сначала поместить чекбокс, в конец поместить делит 
+                    let wrapperDiv = document.createElement("div")
+                    wrapperDiv.classList.add("wrapperDiv")
+                    let checkBox = document.createElement("input")
+                    checkBox.classList.add("checkBox")
+                    checkBox.type = "checkbox"
+                    checkBox.unchecked
+                    wrapperDiv.insertAdjacentElement("afterBegin", checkBox)
+                    let deleteButton = document.createElement("div")
+                    deleteButton.classList.add("button")
+                    deleteButton.classList.add("delete")
+                    deleteButton.addEventListener("click", deleteTask)
+                    deleteButton.innerText = "X";
                     if (clickButton.previousElementSibling.classList.contains("add")) {
-                        formKeeper.insertAdjacentElement("beforeEnd", stringBlock)
+                        //                        formKeeper.insertAdjacentElement("beforeEnd", stringBlock)
+                        formKeeper.insertAdjacentElement("beforeEnd", wrapperDiv)
+                        wrapperDiv.insertAdjacentElement("beforeEnd", stringBlock)
                     }
                     else {
+                        //                        clickButton.parentElement.insertAdjacentElement("afterEnd", stringBlock)
                         clickButton.parentElement.insertAdjacentElement("afterEnd", stringBlock)
                     }
+                    wrapperDiv.append(deleteButton)
                     break;
                 }
             }
@@ -101,9 +113,9 @@
         }
         let agree = function (clickButton) {
             if (clickButton.target.previousElementSibling.value) {
-            let taskText = clickButton.target.previousElementSibling
-            inputStringConstructor("block", "div", "inputTask", "correct", correct, taskText.value, clickButton.target);
-            clickButton.target.previousElementSibling.parentElement.remove()
+                let taskText = clickButton.target.previousElementSibling
+                inputStringConstructor("block", "div", "inputTask", "correct", correct, taskText.value, clickButton.target);
+                clickButton.target.previousElementSibling.parentElement.remove()
             }
         }
 

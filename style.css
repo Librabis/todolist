@@ -57,6 +57,11 @@ body,
     text-align: center;
 }
 
+.wrapperDiv {
+    display: flex;
+    align-items: center;
+}
+
 .listNameBlock {
     display: flex;
     height: 60px;
