@@ -62,21 +62,14 @@
                     }
                     break;
                 }
-                //                if (classTask === "add") {
-                //                    formKeeper.insertAdjacentElement("afterEnd", stringBlock)
-                //                }
-                //                else if (classTask === "title") {
-                //                    formKeeper.insertAdjacentElement("beforeBegin", stringBlock)
-                //                }
-                //                else if (classTask === "inputTask") {                   clickButton.insertAdjacentElement("afterEnd", stringBlock)
-                //                }
             }
             //listName добавляет название для списка 
-            //////////////////////////////////////////////////////////
         let addListName = function (clickButton) {
-            let taskText = clickButton.target.previousElementSibling
-            inputStringConstructor("listNameBlock", "div", "title", "correct list name", correctListName, taskText.value, clickButton.target);
-            clickButton.target.previousElementSibling.parentElement.remove()
+            if (clickButton.target.previousElementSibling.value) {
+                let taskText = clickButton.target.previousElementSibling
+                inputStringConstructor("listNameBlock", "div", "title", "correct list name", correctListName, taskText.value, clickButton.target);
+                clickButton.target.previousElementSibling.parentElement.remove()
+            }
         }
         let correctListName = function (clickButton) {
                 let taskText = clickButton.target.previousElementSibling.textContent
@@ -107,9 +100,11 @@
             clickButton.target.previousElementSibling.parentElement.remove()
         }
         let agree = function (clickButton) {
+            if (clickButton.target.previousElementSibling.value) {
             let taskText = clickButton.target.previousElementSibling
             inputStringConstructor("block", "div", "inputTask", "correct", correct, taskText.value, clickButton.target);
             clickButton.target.previousElementSibling.parentElement.remove()
+            }
         }
 
         function doingF() {
@@ -128,7 +123,7 @@
                     //
             }
             alert(`For ${document.getElementById("listTitle").firstChild.firstChild.innerText} need to do:
-${allTasks}`)
+${allTasks.join(" \n")}`)
         }
         inputStringConstructor("block", "input", "add", "add", addTask)
         inputStringConstructor("block", "input", "title", "add list name", addListName)
