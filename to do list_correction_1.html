@@ -32,7 +32,6 @@
                         inputBlock.value = taskText
                         break;
                     }
-                    
                 }
             }
             //placeInDocument помещение в верстку по переданному значению класса css и созданному блоку
@@ -57,6 +56,7 @@
                     checkBox.type = "checkbox"
                     checkBox.unchecked
                     wrapperDiv.insertAdjacentElement("afterBegin", checkBox)
+                    checkBox.addEventListener("click", doneTask)
                     let deleteButton = document.createElement("div")
                     deleteButton.classList.add("button")
                     deleteButton.classList.add("delete")
@@ -121,6 +121,16 @@
 
         function doingF() {
             alert("done")
+        }
+
+        function doneTask(clickElement) {
+            //alert("working")
+            if (clickElement.target.checked) {
+                clickElement.target.parentElement.querySelectorAll(".inputTask")[0].style.textDecoration = "line-through"
+            }
+            else {
+                clickElement.target.parentElement.querySelectorAll(".inputTask")[0].style.textDecoration = "none"
+            }
         }
         //deleteTask удаление (создание кнопки, помещение в верстку, присвоение функции удаления при нажатии)
         let deleteTask = function (clickElement) {
